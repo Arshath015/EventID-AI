@@ -29,7 +29,6 @@ The platform handles the full identity lifecycle — **register a person → gen
 
 - [Project Description](#-project-description)
 - [Overview](#-overview)
-- [Visual Tour](#-visual-tour)
 - [System Architecture](#-system-architecture)
 - [About the Author](#-about-project-owner)
 - [Tech Stack](#-tech-stack)
@@ -42,6 +41,7 @@ The platform handles the full identity lifecycle — **register a person → gen
 - [Running Locally](#-running-locally)
 - [Deployment Notes](#-deployment-notes)
 - [Troubleshooting & FAQ](#-troubleshooting--faq)
+- [Visual Tour](#-visual-tour)
 - [Credits & License](#-credits--license)
 
 ---
