@@ -379,6 +379,4 @@ A real look at the platform in action - pulled directly from `Project Snapshots/
 
 **License:** MIT
 
- Full project writeup: [`Project Snapshots/PRIYAN_PROJECT_REPORT1.pdf`](Project%20Snapshots/PRIYAN_PROJECT_REPORT1.pdf)
-
 </div>
