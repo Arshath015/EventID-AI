@@ -1,8 +1,3 @@
-
-<!-- ══════════════════════════════════════════════════════════════════════════ -->
-<!--                IDENTITY VERIFICATION PLATFORM — REPO REFERENCE               -->
-<!-- ══════════════════════════════════════════════════════════════════════════ -->
-
 <div align="center">
 
 ![Hero](https://capsule-render.vercel.app/api?type=venom&color=0:0d1117,30:0a0f2c,60:0d2137,100:0a1628&height=240&section=header&text=IDENTITY%20VERIFICATION%20PLATFORM&fontSize=48&fontColor=00d4ff&animation=fadeIn&desc=AI+Identity+%7C+Kiosk+%7C+Training+%7C+Cloud&descSize=14&descColor=7dd3fc&stroke=00d4ff&strokeWidth=1)
@@ -13,26 +8,89 @@
 &nbsp;![Status](https://img.shields.io/badge/STATUS-DEV_READY-00d4ff?style=flat-square&labelColor=0d1117)
 &nbsp;![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&labelColor=0d1117)
 &nbsp;![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat-square&labelColor=0d1117)
+&nbsp;![OpenCV](https://img.shields.io/badge/OpenCV-5C3EE8?style=flat-square&labelColor=0d1117)
+&nbsp;![License](https://img.shields.io/badge/LICENSE-MIT-00d4ff?style=flat-square&labelColor=0d1117)
 
 </div>
 
 ---
 
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     QUICK SUMMARY
-══════════════════════════════════════════════════════════════════════════════ -->
+## Project Description
 
-This repository groups three coordinated projects focused on identity capture, biometric verification, and embedding-based similarity training:
+**Identity Verification Platform** is an end-to-end biometric identity system built around three coordinated services: a kiosk-grade Streamlit app for live capture and verification, a cloud companion for APIs and background processing, and a dedicated training pipeline for face-embedding similarity models.
 
-- `ai_native_app/` — on-device Streamlit kiosk + admin dashboard (camera, QR, biometric, Supabase storage and DB integration).
-- `cloud_native_app/` — cloud-facing companion for APIs, webhook ingestion, and background tasks.
-- `face_similarity_training/` — dataset preprocessing, embedding generation, and threshold analysis utilities.
+The platform handles the full identity lifecycle — **register a person → generate a QR-linked ID → verify them later via live face match against a Supabase-backed knowledge base** — with every step logged for audit. It's designed to be modular and resilient: each service (camera, biometrics, QR, email, database) is isolated, defensive fallbacks keep the kiosk running even without GPU/TensorFlow or live network access, and the training module lets you tune match thresholds against your own dataset before deploying.
 
-This README blends a developer profile header with thorough operational details (run, deploy, SQL schema, and a 3D visual snippet).
+> Built for research, demo, and PoC deployments — not a hardened production identity system out of the box.
 
 ---
 
-## 👨‍💻 About (Project Owner)
+## Table of Contents
+
+- [Project Description](#-project-description)
+- [Overview](#-overview)
+- [Visual Tour](#-visual-tour)
+- [System Architecture](#-system-architecture)
+- [About the Author](#-about-project-owner)
+- [Tech Stack](#-tech-stack)
+- [Repository Structure](#-repository-structure)
+- [How It Works](#-how-it-works)
+- [Module Breakdown](#-module-breakdown)
+- [Model Training & Evaluation](#-model-training--evaluation)
+- [Supabase Schema & SQL](#-supabase-schema--sql)
+- [Optional Visual Extra — 3D Block Animation](#-optional-visual-extra--3d-block-animation)
+- [Running Locally](#-running-locally)
+- [Deployment Notes](#-deployment-notes)
+- [Troubleshooting & FAQ](#-troubleshooting--faq)
+- [Credits & License](#-credits--license)
+
+---
+
+## Overview
+
+This repository groups three coordinated projects focused on identity capture, biometric verification, and embedding-based similarity training:
+
+<div align="center">
+
+| 🖥️ Module | ⚙️ Purpose | 🔑 Core Tech |
+|:---|:---|:---|
+| **`ai_native_app/`** | On-device kiosk + admin dashboard — camera, QR, biometric capture, Supabase storage/DB | Streamlit, OpenCV |
+| **`cloud_native_app/`** | Cloud companion for APIs, webhook ingestion, background tasks | Python, REST |
+| **`face_similarity_training/`** | Dataset preprocessing, embedding generation, threshold analysis | NumPy, DeepFace |
+
+</div>
+
+The repository is built for research, demo, and PoC deployments, with a clear separation between UI logic and services (Supabase, biometric, QR, email), and training code isolated for reuse.
+
+---
+
+## System Architecture
+
+<div align="center">
+<img src="Project%20Snapshots/Project%20Architecture%201-1.png" width="85%"/>
+<br/><sub><b>High-level architecture</b> — kiosk, cloud companion, and Supabase backend</sub>
+<br/><br/>
+<img src="Project%20Snapshots/Project%20Architecture%202.png" width="85%"/>
+<br/><sub><b>Service-level architecture</b> — how individual services communicate</sub>
+</div>
+
+### Data Flow
+
+<div align="center">
+<img src="Project%20Snapshots/Data%20Flow%20Diagram.png" width="80%"/>
+<br/><sub>End-to-end data flow: capture → embed → store → match → log</sub>
+</div>
+
+### Algorithm Flow
+
+<div align="center">
+<img src="Project%20Snapshots/Algorithm%20Flow%20Diagram.png" width="80%"/>
+<br/><sub>Face matching algorithm — from frame capture to similarity decision</sub>
+</div>
+
+---
+
+## About (Project Owner)
 
 ```python
 class Owner:
@@ -50,315 +108,145 @@ print(owner.motto())
 
 ---
 
-## 🧭 Repo Layout (short)
+## Tech Stack
 
-- `ai_native_app/` — Streamlit app (pages, services, ui, config)
-- `cloud_native_app/` — cloud API and integration glue
-- `face_similarity_training/` — training scripts, embeddings, results
+<div align="center">
 
----
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![OpenCV](https://img.shields.io/badge/OpenCV-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)
 
-## 🛠️ Tech Stack (high level)
+</div>
 
-- Languages: Python, SQL
-- UI: Streamlit
-- Vision: OpenCV (fallback), optional DeepFace/tf for stronger embeddings
-- DB & Storage: Supabase (Postgres + Storage)
-- Packaging: virtualenv / pip
-
----
-
-## 🚀 Highlights & How It Works
-
-- Registration flow: camera capture -> optional face embedding -> upload to `id_photos` bucket -> create `id_cards` entry.
-- Kiosk flow: QR scan / ID lookup -> live face capture -> embedding -> cosine similarity check against KB -> record `verifications`.
-- Training: use `face_similarity_training/scripts` to build embeddings and tune thresholds (outputs in `results/`).
+- **Languages:** Python, SQL
+- **UI:** Streamlit
+- **Vision:** OpenCV (fallback), optional DeepFace / TensorFlow for stronger embeddings
+- **Database & Storage:** Supabase (Postgres + Storage)
+- **Packaging:** virtualenv / pip
 
 ---
 
-## 🎯 Supabase Schema (SQL)
+## Repository Structure
 
-Run this SQL in Supabase SQL editor to create the minimal schema used by the apps.
+```
+ai_native_app/
+├── app.py                  # Entry point (Streamlit router)
+├── config.py                # Environment configuration
+├── pages/                   # register, dashboard, kiosk
+└── services/                 # supabase, biometric, qr, email, knowledge base
+└── ui/                       # theme + UI helpers
+
+cloud_native_app/
+└── app.py                   # Cloud-facing API / webhook / background-task entry point
+
+face_similarity_training/
+├── scripts/                  # preprocessing, embedding generation, threshold analysis
+├── models/                   # saved model artifacts
+├── train_embeddings.npy      # sample/trained embeddings
+└── results/                  # similarity score CSVs and analysis output
+```
+
+---
+
+## How It Works
+
+<div align="center">
+
+```mermaid
+flowchart LR
+    A[📷 Capture] --> B[🧬 Generate Embedding]
+    B --> C[☁️ Upload to Supabase]
+    C --> D[🪪 Create ID Card + QR]
+    D --> E[📲 Kiosk Scan]
+    E --> F[🔍 Similarity Check]
+    F --> G[✅ Log Verification]
+```
+
+</div>
+
+1. **Registration flow** — camera capture → optional face embedding → upload to the `id_photos` bucket → create an `id_cards` entry.
+2. **Kiosk flow** — QR scan / ID lookup → live face capture → embedding → cosine similarity check against the knowledge base → record in `verifications`.
+3. **Training** — use `face_similarity_training/scripts` to build embeddings and tune thresholds (outputs saved to `results/`).
+
+---
+
+## Module Breakdown
+
+### `ai_native_app/`
+
+- **`app.py`** — lightweight router that applies the UI theme and mounts three tabs: Register Person, Command Center, Auto-Scan Kiosk.
+- **`config.py`** — loads environment variables (optional `python-dotenv` support); exposes `SUPABASE_URL`, `SUPABASE_KEY`, `STORAGE_BUCKET`, `MODEL_NAME`, `VERIFICATION_THRESHOLD`.
+- **`ui/theme.py`** — CSS for the cyber/JARVIS-style look, plus `render_terminal_logs()` used by the kiosk and dashboard.
+- **`pages/register_page.py`** — handles biometric capture via `st.camera_input`, registration form validation, photo upload to Supabase storage, and QR generation + email dispatch.
+- **`pages/dashboard_page.py`** — admin view with user listing, search, inline edits/deletes, and verification logs.
+- **`pages/kiosk_page.py`** — continuous camera loop: QR scan → map UUID to known user via the embeddings knowledge base → face detection + embedding → similarity check → record verification. Includes recovery handling for camera hardware locks and frame-rate throttling.
+- **`services/supabase_service.py`** — single source of truth for Supabase client init and table/storage methods; defensive fallbacks when credentials or network are missing.
+- **`services/biometric_service.py`** — `BiometricEngine.extract_and_embed()` returns a normalized embedding vector and bounding box. Uses a lightweight OpenCV fallback when the TensorFlow-based DeepFace stack isn't available, and switches to DeepFace automatically when present.
+- **`services/qr_service.py`, `email_service.py`, `knowledge_service.py`** — QR encode/decode, email dispatch with attachments, and the in-memory knowledge base (ID → embedding map).
+
+> **Tip:** keep `.env` secrets out of source control. If your environment can't install heavy ML packages, the app gracefully falls back to the lightweight OpenCV embedding.
+
+### `cloud_native_app/`
+
+A separate cloud-oriented entry point. Typical responsibilities include:
+
+- Exposing webhooks/REST endpoints to integrate with the Streamlit kiosk (remote logging, centralized verification replicas, admin automation).
+- Running background tasks (scheduled model refreshes, batch embedding ingestion).
+
+For production: wrap the app behind authentication, use environment variables for secrets, and deploy on a platform that supports long-running processes (Azure App Service, AWS ECS, GCP Cloud Run).
+
+### `face_similarity_training/`
+
+- **`scripts/preprocess_faces.py`** — face cropping, alignment, dataset prep.
+- **`scripts/generate_embeddings.py`** — generates embeddings and saves them (e.g. `train_embeddings.npy`).
+- **`scripts/threshold_analysis.py`** — pairwise comparisons, ROC curve computation, writes `similarity_scores.csv` to `results/`.
+
+> Keep training datasets separate and respect privacy rules when handling biometric data.
+
+---
+
+## Model Training & Evaluation
+
+<div align="center">
+
+<table>
+<tr>
+<td align="center" width="33%">
+<img src="Project%20Snapshots/Downloading_dataset.png" width="100%"/>
+<br/><b>Dataset Acquisition</b>
+</td>
+<td align="center" width="33%">
+<img src="Project%20Snapshots/preprocessing.png" width="100%"/>
+<br/><b>Preprocessing</b>
+</td>
+<td align="center" width="33%">
+<img src="Project%20Snapshots/model%20weight.png" width="100%"/>
+<br/><b>Model Weights</b>
+</td>
+</tr>
+</table>
+
+<img src="Project%20Snapshots/threshold%20analysis.png" width="80%"/>
+<br/><sub><b>Threshold analysis</b> — similarity score distribution used to tune the verification threshold</sub>
+
+</div>
+
+---
+
+## Supabase Schema & SQL
+
+<div align="center">
+<img src="Project%20Snapshots/database.png" width="80%"/>
+<br/><sub>Live schema as configured in Supabase</sub>
+</div>
+
+Run this in the Supabase SQL editor to create the schema used by both apps.
 
 ```sql
-CREATE EXTENSION IF NOT EXISTS "pgcrypto";
-
-CREATE TABLE IF NOT EXISTS id_cards (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  full_name text NOT NULL,
-  rrn text UNIQUE,
-  department text,
-  phone text,
-  email text UNIQUE,
-  photo_path text,
-  is_active boolean DEFAULT true,
-  created_at timestamptz DEFAULT now(),
-  updated_at timestamptz
-);
-
-CREATE TABLE IF NOT EXISTS verifications (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  card_id uuid REFERENCES id_cards(id) ON DELETE SET NULL,
-  result text NOT NULL,
-  note text,
-  created_at timestamptz DEFAULT now()
-);
-
-CREATE INDEX IF NOT EXISTS idx_id_cards_email ON id_cards(email);
-CREATE INDEX IF NOT EXISTS idx_verifications_card_id ON verifications(card_id);
-
--- example seed
-INSERT INTO id_cards(full_name, rrn, department, phone, email, photo_path)
-VALUES ('Alice Example','RRN-001','Engineering','+1234567890','alice@example.com','photos/sample.jpg');
-```
-
----
-
-## 🧪 3D Block Animation (embed)
-
-Save the HTML below as `3d-blocks.html` and open it in a browser or serve via docs. Useful as a visual demo snippet for the admin UI.
-
-```html
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <title>3D Block Grid</title>
-  <style>
-    body { background:#081018; display:flex; align-items:center; justify-content:center; height:100vh; margin:0; }
-    .scene { perspective:1000px; }
-    .grid { width:520px; display:grid; grid-template-columns:repeat(5,100px); grid-gap:8px; transform-style:preserve-3d; }
-    .block { width:100px; height:100px; background:linear-gradient(135deg,#002b36,#004e6b); border-radius:8px; box-shadow:0 8px 20px rgba(0,0,0,0.6); transform-origin:center; transition:transform 450ms cubic-bezier(.2,.9,.3,1), box-shadow 450ms; }
-    .block:hover { transform:translateZ(40px) rotateX(12deg) rotateY(-8deg); box-shadow:0 30px 40px rgba(0,0,0,0.6); }
-    @keyframes floaty { 0%{transform:translateZ(0)} 50%{transform:translateZ(24px)} 100%{transform:translateZ(0)} }
-    .block.animated { animation:floaty 3s ease-in-out infinite; }
-    .label { font-family:Inter,system-ui; color:#a1dcf1; text-align:center; font-size:12px; padding-top:6px }
-  </style>
-</head>
-<body>
-  <div class="scene">
-    <div class="grid" id="grid"></div>
-  </div>
-  <script>
-    const grid = document.getElementById('grid');
-    for(let i=0;i<20;i++){
-      const b = document.createElement('div');
-      b.className='block animated';
-      const lbl = document.createElement('div'); lbl.className='label'; lbl.textContent='NODE '+(i+1);
-      b.appendChild(lbl);
-      b.style.animationDelay = (i*120)+'ms';
-      grid.appendChild(b);
-    }
-  </script>
-</body>
-</html>
-```
-
----
-
-## ▶️ Run locally (quick)
-
-Recommended Python: 3.9–3.11. For full `deepface` support use a separate venv with Python 3.9/3.10 and install `tensorflow`.
-
-```powershell
-cd "D:\\....\\project\\app"
-python -m pip install -r ai_native_app\requirements.txt
-python -m streamlit run ai_native_app\app.py
-```
-
-If Supabase is not available, the `ai_native_app` code uses defensive fallbacks and will still run in demo mode.
-
----
-
-## 📂 Important Files
-
-- `ai_native_app/app.py` — Streamlit entry and tab router
-- `ai_native_app/config.py` — env loader (supports optional `python-dotenv`)
-- `ai_native_app/services/biometric_service.py` — OpenCV fallback + optional DeepFace
-- `face_similarity_training/scripts` — embedding & threshold tools
-
----
-
-## 👥 Contact & Credits
-
-- Author: Arshath Farwyz — AI Creative Engineer
-- Email: arshathfarwyz015@gmail.com
-- GitHub: https://github.com/Arshath015
-
-License: MIT
-
----
-
-**Table of Contents**
-
-- Overview
-- Project Structure (high-level)
-- ai_native_app — Deep breakdown
-- cloud_native_app — Deep breakdown
-- face_similarity_training — Deep breakdown
-- 3D UI block / Animated showcase (HTML/CSS/JS snippet you can embed)
-- Supabase: schema & SQL (complete)
-- Running locally (commands)
-- Deployment notes
-- Troubleshooting & FAQ
-- Credits & License
-
----
-
-## Overview
-
-This workspace demonstrates a full small-stack pipeline for identity verification and related tooling:
-
-- An interactive local kiosk built with Streamlit (`ai_native_app`) — camera-based QR + biometric verification, registration, and an admin dashboard.
-- A cloud-native companion (`cloud_native_app`) which can expose APIs for orchestration, worker tasks, or webhook integration.
-- A model training area (`face_similarity_training`) containing scripts to create embeddings, evaluate similarity thresholds, and produce datasets and CSV outputs used by the kiosk at runtime.
-
-The repository is intended for research, demo, and PoC deployments. It focuses on modularity: UI logic separated from services (Supabase, biometric, QR, email), and the training code isolated for re-use.
-
----
-
-## Project Structure (high-level)
-
-- ai_native_app/
-  - app.py — entry point (Streamlit router)
-  - config.py — environment configuration
-  - pages/ — Streamlit page modules (register, dashboard, kiosk)
-  - services/ — business logic (supabase, biometric, qr, email, knowledge base)
-  - ui/ — theme and small UI helpers
-
-- cloud_native_app/
-  - app.py — cloud-facing app (API server or web frontend)
-
-- face_similarity_training/
-  - scripts/ — training & preprocessing scripts
-  - models/ — saved model artifacts
-  - train_embeddings.npy — sample/trained embeddings
-  - results/ — CSV of similarity scores and analyses
-
----
-
-## ai_native_app — Deep breakdown
-
-This is the primary demo application. The code has been modularized into pages and services.
-
-- `app.py`
-  - Lightweight router that applies the UI theme and mounts three tabs: Register Person, Command Center, Auto-Scan Kiosk.
-
-- `config.py`
-  - Loads environment variables (supports python-dotenv optionally). Exposes constants such as `SUPABASE_URL`, `SUPABASE_KEY`, `STORAGE_BUCKET`, `MODEL_NAME`, and `VERIFICATION_THRESHOLD`.
-
-- `ui/theme.py`
-  - Contains CSS injected to achieve the cyber/JARVIS look, plus the `render_terminal_logs()` helper used by the kiosk and dashboard.
-
-- `pages/register_page.py`
-  - Handles biometric acquisition via `st.camera_input`, registration form, validation, photo upload to Supabase storage, and QR generation & email dispatch.
-
-- `pages/dashboard_page.py`
-  - Admin view that lists users, allows searching, inline updates and deletions, and shows verification logs.
-
-- `pages/kiosk_page.py`
-  - Continuous camera loop performing: QR scan -> map QR UUID to known user (embeddings KB) -> run face detection & embedding -> similarity check -> record verification.
-  - Uses robust camera handling to recover from hardware locks and throttles the frame loop.
-
-- `services/supabase_service.py`
-  - Single place for Supabase client initialization and table/storage methods. The code is defensive — returns defaults when the network or credentials are missing.
-
-- `services/biometric_service.py`
-  - Provides `BiometricEngine.extract_and_embed()` which returns a normalized vector embedding and bounding box. The implementation uses a lightweight OpenCV fallback for environments where the TensorFlow-based `DeepFace` stack is unavailable. If `DeepFace` is present and compatible, it will be used automatically.
-
-- `services/qr_service.py`, `services/email_service.py`, `services/knowledge_service.py`
-  - Utilities for QR encode/decode, sending emails with attachments, and building the in-memory knowledge base (id -> embedding map).
-
-Notes & Tips
-- Keep `.env` secrets out of source control. Use `SUPABASE_URL` and `SUPABASE_SERVICE_KEY` for Supabase.
-- If your environment cannot install heavy ML packages (TensorFlow), the app will gracefully fall back to the lightweight OpenCV histogram embedding.
-
----
-
-## cloud_native_app — Deep breakdown
-
-This folder contains a separate cloud-oriented entrypoint. Typical responsibilities for `cloud_native_app/app.py` in this workspace may include:
-
-- Exposing webhooks or REST endpoints to integrate with the Streamlit kiosk (for remote logging, centralized verification replica, or admin automation).
-- Running background tasks (e.g., scheduled model refreshes or batch embedding ingestion).
-
-If you plan to run the cloud app in production:
-
-- Wrap the app behind authentication.
-- Use environment variables for DB and API secrets.
-- Deploy on a server or platform that supports long-running background processes (e.g., Azure App Service, AWS ECS, GCP Cloud Run).
-
----
-
-## face_similarity_training — Deep breakdown
-
-This area contains the scripts used to create, evaluate, and tune embeddings and thresholds. Typical files:
-
-- `scripts/preprocess_faces.py` — face cropping, alignment, dataset prep.
-- `scripts/generate_embeddings.py` — produce embeddings from images and save them (e.g., `train_embeddings.npy`).
-- `scripts/threshold_analysis.py` — run pairwise comparisons, compute ROC curves, and write `similarity_scores.csv` to `results/`.
-
-Data Usage
-- Keep your training dataset separate and respect privacy rules when using biometric data.
-
----
-
-## 3D Block Animation — interactive snippet
-
-Below is an HTML/CSS/JS snippet that renders an animated 3D block grid similar to the visual style in the project screenshots. You can open this locally (save as `3d-blocks.html`) and embed into a docs site or an iframe inside your admin UI.
-
-```html
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <title>3D Block Grid</title>
-  <style>
-    body { background:#081018; display:flex; align-items:center; justify-content:center; height:100vh; margin:0; }
-    .scene { perspective:1000px; }
-    .grid { width:520px; display:grid; grid-template-columns:repeat(5,100px); grid-gap:8px; transform-style:preserve-3d; }
-    .block { width:100px; height:100px; background:linear-gradient(135deg,#002b36,#004e6b); border-radius:8px; box-shadow:0 8px 20px rgba(0,0,0,0.6); transform-origin:center; transition:transform 450ms cubic-bezier(.2,.9,.3,1), box-shadow 450ms; }
-    .block:hover { transform:translateZ(40px) rotateX(12deg) rotateY(-8deg); box-shadow:0 30px 40px rgba(0,0,0,0.6); }
-    /* animated wave */
-    @keyframes floaty { 0%{transform:translateZ(0)} 50%{transform:translateZ(24px)} 100%{transform:translateZ(0)} }
-    .block.animated { animation:floaty 3s ease-in-out infinite; }
-    .label { font-family:Inter,system-ui; color:#a1dcf1; text-align:center; font-size:12px; padding-top:6px }
-  </style>
-</head>
-<body>
-  <div class="scene">
-    <div class="grid" id="grid"></div>
-  </div>
-  <script>
-    const grid = document.getElementById('grid');
-    for(let i=0;i<20;i++){
-      const b = document.createElement('div');
-      b.className='block animated';
-      const lbl = document.createElement('div'); lbl.className='label'; lbl.textContent='NODE '+(i+1);
-      b.appendChild(lbl);
-      b.style.animationDelay = (i*120)+'ms';
-      grid.appendChild(b);
-    }
-  </script>
-</body>
-</html>
-```
-
-Embed tip: place the file in a static docs folder and use an `<iframe>` in your admin UI for live 3D visualizations.
-
----
-
-## Supabase — schema & SQL
-
-The app uses Supabase for two primary needs:
-
-- `id_cards` table — stores registered users and their photo storage paths.
-- `verifications` table — records successful verification events.
-
-Below is a minimal SQL schema you can run in your Supabase SQL editor to create these tables. Adjust types and constraints for your policy and region.
-
-```sql
--- Enable UUID extension (Postgres)
+-- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 -- Users / ID Cards
@@ -384,67 +272,113 @@ CREATE TABLE IF NOT EXISTS verifications (
   created_at timestamptz DEFAULT now()
 );
 
--- Indexes to help queries
+-- Indexes
 CREATE INDEX IF NOT EXISTS idx_id_cards_email ON id_cards(email);
 CREATE INDEX IF NOT EXISTS idx_verifications_card_id ON verifications(card_id);
 
--- Example: insert a sample user (replace with your own values)
+-- Example seed data
 INSERT INTO id_cards(full_name, rrn, department, phone, email, photo_path)
 VALUES ('Alice Example','RRN-001','Engineering','+1234567890','alice@example.com','photos/sample.jpg');
 
--- Example: record a verification
 INSERT INTO verifications(card_id, result, note)
 VALUES ((SELECT id FROM id_cards WHERE email='alice@example.com' LIMIT 1), 'success', 'Test entry');
 ```
 
-Supabase storage
-- The app stores images under a bucket (configured as `id_photos`). Create a bucket named `id_photos` in the Supabase Storage panel and set rules as appropriate (public or signed URLs as used by the app).
+**Storage:** create a bucket named `id_photos` in Supabase Storage and configure public/signed access as the app requires.
 
-Security notes
-- Keep `SUPABASE_SERVICE_KEY` secret. Use Service Role keys only on trusted servers (not in client code).
-- For client-side flows, use the anon public key together with RLS policies.
+**Security notes:**
+- Keep `SUPABASE_SERVICE_KEY` secret — service role keys only belong on trusted servers, never in client code.
+- For client-side flows, use the anon public key with Row-Level-Security (RLS) policies.
 
 ---
 
-## Running locally
+## Running Locally
 
-General prerequisites
+**Prerequisites:** Python 3.9–3.11 recommended. For full DeepFace/TensorFlow support, use a separate venv on Python 3.9 or 3.10.
 
-- Python 3.8 — 3.11 recommended (this repo was adapted to work without TensorFlow for local dev)
-- `pip install -r ai_native_app/requirements.txt`
-
-Launch Streamlit app (from repository root):
-
-```powershell
-cd "D:\Freelancing\Priyan projects\app"
-python -m streamlit run ai_native_app\app.py
+```bash
+# from the repository root
+python -m pip install -r ai_native_app/requirements.txt
+python -m streamlit run ai_native_app/app.py
 ```
 
-If you plan to enable full DeepFace support (optional), create a separate virtualenv with a Python version compatible with TensorFlow (commonly 3.9 or 3.10), and install `deepface` plus `tensorflow`.
+If Supabase credentials aren't configured, `ai_native_app` falls back to a defensive demo mode and will still run.
 
 ---
 
-## Deployment notes
+## Deployment Notes
 
-- `ai_native_app` is primarily intended for local kiosk usage. For production kiosks, package as a desktop app (Electron + embedded browser) or run it headless on a small local server and surface via a kiosk browser.
-- `cloud_native_app` can be deployed to any Python-friendly PaaS. Use environment variables for Supabase keys.
+- `ai_native_app` is built for local kiosk usage. For production kiosks, package it as a desktop app (Electron + embedded browser) or run it headless on a small local server, surfaced via a kiosk browser.
+- `cloud_native_app` can be deployed to any Python-friendly PaaS — use environment variables for Supabase keys and other secrets.
 
 ---
 
 ## Troubleshooting & FAQ
 
-- Error: `ModuleNotFoundError: No module named 'cv2'` — Run `pip install opencv-python`.
-- Error: `ModuleNotFoundError: No module named 'dotenv'` — Either install `python-dotenv` or ensure `config.py` can load env vars.
-- Network errors contacting Supabase — confirm `SUPABASE_URL` and `SUPABASE_SERVICE_KEY` in `.env` and that the machine has outbound network access.
+| Issue | Fix |
+|---|---|
+| `ModuleNotFoundError: No module named 'cv2'` | `pip install opencv-python` |
+| `ModuleNotFoundError: No module named 'dotenv'` | Install `python-dotenv`, or ensure `config.py` loads env vars without it |
+| Network errors contacting Supabase | Confirm `SUPABASE_URL` and `SUPABASE_SERVICE_KEY` in `.env`, and that the machine has outbound network access |
 
 ---
 
-## Credits
+---
 
-Author: Arshath Farwyz (project assets and original UI/UX)
+## Visual Tour
 
-This README was produced to provide a single, navigable reference for the workspace. If you want, I can also generate a `docs/` site that renders this README with live embedded previews (3D block, sample camera feed mocking, etc.).
+A real look at the platform in action — pulled directly from `Project Snapshots/`.
+
+<div align="center">
+
+<table>
+<tr>
+<td align="center" width="50%">
+<img src="Project%20Snapshots/Module%201%20-%20Qr%20generation.png" width="100%"/>
+<br/><b>Module 1 — QR Generation</b><br/>
+<sub>Registration flow generating a unique QR-linked ID card</sub>
+</td>
+<td align="center" width="50%">
+<img src="Project%20Snapshots/Module%201%20-%20admin%20panel.png" width="100%"/>
+<br/><b>Module 1 — Admin Panel</b><br/>
+<sub>Command Center dashboard for managing registered users</sub>
+</td>
+</tr>
+<tr>
+<td align="center" width="50%">
+<img src="Project%20Snapshots/All%20module%20Screenshot1.png" width="100%"/>
+<br/><b>Kiosk — Live Verification</b><br/>
+<sub>Auto-scan kiosk performing real-time face match</sub>
+</td>
+<td align="center" width="50%">
+<img src="Project%20Snapshots/All%20module%20Screenshot2.png" width="100%"/>
+<br/><b>Verification Log</b><br/>
+<sub>Audit trail of verification attempts and results</sub>
+</td>
+</tr>
+<tr>
+<td align="center" colspan="2">
+<img src="Project%20Snapshots/All%20module%20Screenshot3.png" width="60%"/>
+<br/><b>End-to-End Module View</b><br/>
+<sub>Combined view across registration, kiosk, and dashboard</sub>
+</td>
+</tr>
+</table>
+
+</div>
 
 ---
 
-License: MIT (apply your preferred license to the repo root)
+## Credits & License
+
+<div align="center">
+
+**Author:** Arshath Farwyz — AI Creative Engineer
+**Email:** arshathfarwyz015@gmail.com
+**GitHub:** [github.com/Arshath015](https://github.com/Arshath015)
+
+**License:** MIT
+
+ Full project writeup: [`Project Snapshots/PRIYAN_PROJECT_REPORT1.pdf`](Project%20Snapshots/PRIYAN_PROJECT_REPORT1.pdf)
+
+</div>
