@@ -1,0 +1,6 @@
+streamlit
+numpy
+opencv-python
+python-dotenv
+supabase
+qrcode[pil]

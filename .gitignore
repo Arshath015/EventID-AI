@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+env/
+venv/
+*.env
+
+# IDEs
+.vscode/
+.idea/
+
+# Data, models, results
+face_similarity_training/results/
+face_similarity_training/models/
+train_embeddings.npy
+*.npy
+*.npz
+
+# Misc
+.DS_Store

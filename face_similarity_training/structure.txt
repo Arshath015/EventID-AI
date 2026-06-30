@@ -1,0 +1,35 @@
+face_similarity_training/
+│
+├── data/
+│   ├── raw/
+│   │   └── vggface2/              # Downloaded dataset
+│   │
+│   ├── processed/
+│   │   ├── aligned_faces/         # Cropped & aligned faces
+│   │   └── embeddings/            # Saved face embeddings (.npy/.pkl)
+│
+├── scripts/
+│   ├── download_dataset.py        # Kaggle dataset download
+│   ├── preprocess_faces.py        # Face detection & alignment
+│   ├── generate_embeddings.py     # Face embedding extraction
+│   ├── similarity_test.py         # Face similarity evaluation
+│   └── threshold_analysis.py      # Threshold tuning
+│
+├── src/
+│   ├── face_detector.py           # MTCNN / RetinaFace
+│   ├── face_aligner.py            # Alignment logic
+│   ├── embedding_model.py         # ArcFace / SFace loader
+│   ├── similarity.py              # Cosine similarity
+│   └── utils.py                   # Helpers
+│
+├── models/
+│   └── arcface_resnet50.pth        # Pretrained weights
+│
+├── results/
+│   ├── similarity_scores.csv
+│   ├── threshold_plot.png
+│   └── evaluation_report.txt
+│
+├── config.py                      # Paths & constants
+├── requirements.txt
+└── README.md
