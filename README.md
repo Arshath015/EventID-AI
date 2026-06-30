@@ -19,9 +19,9 @@
 
 **Identity Verification Platform** is an end-to-end biometric identity system built around three coordinated services: a kiosk-grade Streamlit app for live capture and verification, a cloud companion for APIs and background processing, and a dedicated training pipeline for face-embedding similarity models.
 
-The platform handles the full identity lifecycle — **register a person → generate a QR-linked ID → verify them later via live face match against a Supabase-backed knowledge base** — with every step logged for audit. It's designed to be modular and resilient: each service (camera, biometrics, QR, email, database) is isolated, defensive fallbacks keep the kiosk running even without GPU/TensorFlow or live network access, and the training module lets you tune match thresholds against your own dataset before deploying.
+The platform handles the full identity lifecycle - **register a person → generate a QR-linked ID → verify them later via live face match against a Supabase-backed knowledge base** - with every step logged for audit. It's designed to be modular and resilient: each service (camera, biometrics, QR, email, database) is isolated, defensive fallbacks keep the kiosk running even without GPU/TensorFlow or live network access, and the training module lets you tune match thresholds against your own dataset before deploying.
 
-> Built for research, demo, and PoC deployments — not a hardened production identity system out of the box.
+> Built for research, demo, and PoC deployments - not a hardened production identity system out of the box.
 
 ---
 
@@ -37,7 +37,7 @@ The platform handles the full identity lifecycle — **register a person → gen
 - [Module Breakdown](#-module-breakdown)
 - [Model Training & Evaluation](#-model-training--evaluation)
 - [Supabase Schema & SQL](#-supabase-schema--sql)
-- [Optional Visual Extra — 3D Block Animation](#-optional-visual-extra--3d-block-animation)
+- [Optional Visual Extra - 3D Block Animation](#-optional-visual-extra--3d-block-animation)
 - [Running Locally](#-running-locally)
 - [Deployment Notes](#-deployment-notes)
 - [Troubleshooting & FAQ](#-troubleshooting--faq)
@@ -54,7 +54,7 @@ This repository groups three coordinated projects focused on identity capture, b
 
 | 🖥️ Module | ⚙️ Purpose | 🔑 Core Tech |
 |:---|:---|:---|
-| **`ai_native_app/`** | On-device kiosk + admin dashboard — camera, QR, biometric capture, Supabase storage/DB | Streamlit, OpenCV |
+| **`ai_native_app/`** | On-device kiosk + admin dashboard - camera, QR, biometric capture, Supabase storage/DB | Streamlit, OpenCV |
 | **`cloud_native_app/`** | Cloud companion for APIs, webhook ingestion, background tasks | Python, REST |
 | **`face_similarity_training/`** | Dataset preprocessing, embedding generation, threshold analysis | NumPy, DeepFace |
 
@@ -68,10 +68,10 @@ The repository is built for research, demo, and PoC deployments, with a clear se
 
 <div align="center">
 <img src="Project%20Snapshots/Project%20Architecture%201-1.png" width="85%"/>
-<br/><sub><b>High-level architecture</b> — kiosk, cloud companion, and Supabase backend</sub>
+<br/><sub><b>High-level architecture</b> - kiosk, cloud companion, and Supabase backend</sub>
 <br/><br/>
 <img src="Project%20Snapshots/Project%20Architecture%202.png" width="85%"/>
-<br/><sub><b>Service-level architecture</b> — how individual services communicate</sub>
+<br/><sub><b>Service-level architecture</b> - how individual services communicate</sub>
 </div>
 
 ### Data Flow
@@ -85,7 +85,7 @@ The repository is built for research, demo, and PoC deployments, with a clear se
 
 <div align="center">
 <img src="Project%20Snapshots/Algorithm%20Flow%20Diagram.png" width="80%"/>
-<br/><sub>Face matching algorithm — from frame capture to similarity decision</sub>
+<br/><sub>Face matching algorithm - from frame capture to similarity decision</sub>
 </div>
 
 ---
@@ -167,9 +167,9 @@ flowchart LR
 
 </div>
 
-1. **Registration flow** — camera capture → optional face embedding → upload to the `id_photos` bucket → create an `id_cards` entry.
-2. **Kiosk flow** — QR scan / ID lookup → live face capture → embedding → cosine similarity check against the knowledge base → record in `verifications`.
-3. **Training** — use `face_similarity_training/scripts` to build embeddings and tune thresholds (outputs saved to `results/`).
+1. **Registration flow** - camera capture → optional face embedding → upload to the `id_photos` bucket → create an `id_cards` entry.
+2. **Kiosk flow** - QR scan / ID lookup → live face capture → embedding → cosine similarity check against the knowledge base → record in `verifications`.
+3. **Training** - use `face_similarity_training/scripts` to build embeddings and tune thresholds (outputs saved to `results/`).
 
 ---
 
@@ -177,15 +177,15 @@ flowchart LR
 
 ### `ai_native_app/`
 
-- **`app.py`** — lightweight router that applies the UI theme and mounts three tabs: Register Person, Command Center, Auto-Scan Kiosk.
-- **`config.py`** — loads environment variables (optional `python-dotenv` support); exposes `SUPABASE_URL`, `SUPABASE_KEY`, `STORAGE_BUCKET`, `MODEL_NAME`, `VERIFICATION_THRESHOLD`.
-- **`ui/theme.py`** — CSS for the cyber/JARVIS-style look, plus `render_terminal_logs()` used by the kiosk and dashboard.
-- **`pages/register_page.py`** — handles biometric capture via `st.camera_input`, registration form validation, photo upload to Supabase storage, and QR generation + email dispatch.
-- **`pages/dashboard_page.py`** — admin view with user listing, search, inline edits/deletes, and verification logs.
-- **`pages/kiosk_page.py`** — continuous camera loop: QR scan → map UUID to known user via the embeddings knowledge base → face detection + embedding → similarity check → record verification. Includes recovery handling for camera hardware locks and frame-rate throttling.
-- **`services/supabase_service.py`** — single source of truth for Supabase client init and table/storage methods; defensive fallbacks when credentials or network are missing.
-- **`services/biometric_service.py`** — `BiometricEngine.extract_and_embed()` returns a normalized embedding vector and bounding box. Uses a lightweight OpenCV fallback when the TensorFlow-based DeepFace stack isn't available, and switches to DeepFace automatically when present.
-- **`services/qr_service.py`, `email_service.py`, `knowledge_service.py`** — QR encode/decode, email dispatch with attachments, and the in-memory knowledge base (ID → embedding map).
+- **`app.py`** - lightweight router that applies the UI theme and mounts three tabs: Register Person, Command Center, Auto-Scan Kiosk.
+- **`config.py`** - loads environment variables (optional `python-dotenv` support); exposes `SUPABASE_URL`, `SUPABASE_KEY`, `STORAGE_BUCKET`, `MODEL_NAME`, `VERIFICATION_THRESHOLD`.
+- **`ui/theme.py`** - CSS for the cyber/JARVIS-style look, plus `render_terminal_logs()` used by the kiosk and dashboard.
+- **`pages/register_page.py`** - handles biometric capture via `st.camera_input`, registration form validation, photo upload to Supabase storage, and QR generation + email dispatch.
+- **`pages/dashboard_page.py`** - admin view with user listing, search, inline edits/deletes, and verification logs.
+- **`pages/kiosk_page.py`** - continuous camera loop: QR scan → map UUID to known user via the embeddings knowledge base → face detection + embedding → similarity check → record verification. Includes recovery handling for camera hardware locks and frame-rate throttling.
+- **`services/supabase_service.py`** - single source of truth for Supabase client init and table/storage methods; defensive fallbacks when credentials or network are missing.
+- **`services/biometric_service.py`** - `BiometricEngine.extract_and_embed()` returns a normalized embedding vector and bounding box. Uses a lightweight OpenCV fallback when the TensorFlow-based DeepFace stack isn't available, and switches to DeepFace automatically when present.
+- **`services/qr_service.py`, `email_service.py`, `knowledge_service.py`** - QR encode/decode, email dispatch with attachments, and the in-memory knowledge base (ID → embedding map).
 
 > **Tip:** keep `.env` secrets out of source control. If your environment can't install heavy ML packages, the app gracefully falls back to the lightweight OpenCV embedding.
 
@@ -200,9 +200,9 @@ For production: wrap the app behind authentication, use environment variables fo
 
 ### `face_similarity_training/`
 
-- **`scripts/preprocess_faces.py`** — face cropping, alignment, dataset prep.
-- **`scripts/generate_embeddings.py`** — generates embeddings and saves them (e.g. `train_embeddings.npy`).
-- **`scripts/threshold_analysis.py`** — pairwise comparisons, ROC curve computation, writes `similarity_scores.csv` to `results/`.
+- **`scripts/preprocess_faces.py`** - face cropping, alignment, dataset prep.
+- **`scripts/generate_embeddings.py`** - generates embeddings and saves them (e.g. `train_embeddings.npy`).
+- **`scripts/threshold_analysis.py`** - pairwise comparisons, ROC curve computation, writes `similarity_scores.csv` to `results/`.
 
 > Keep training datasets separate and respect privacy rules when handling biometric data.
 
@@ -230,7 +230,7 @@ For production: wrap the app behind authentication, use environment variables fo
 </table>
 
 <img src="Project%20Snapshots/threshold%20analysis.png" width="80%"/>
-<br/><sub><b>Threshold analysis</b> — similarity score distribution used to tune the verification threshold</sub>
+<br/><sub><b>Threshold analysis</b> - similarity score distribution used to tune the verification threshold</sub>
 
 </div>
 
@@ -287,7 +287,7 @@ VALUES ((SELECT id FROM id_cards WHERE email='alice@example.com' LIMIT 1), 'succ
 **Storage:** create a bucket named `id_photos` in Supabase Storage and configure public/signed access as the app requires.
 
 **Security notes:**
-- Keep `SUPABASE_SERVICE_KEY` secret — service role keys only belong on trusted servers, never in client code.
+- Keep `SUPABASE_SERVICE_KEY` secret - service role keys only belong on trusted servers, never in client code.
 - For client-side flows, use the anon public key with Row-Level-Security (RLS) policies.
 
 ---
@@ -309,7 +309,7 @@ If Supabase credentials aren't configured, `ai_native_app` falls back to a defen
 ## Deployment Notes
 
 - `ai_native_app` is built for local kiosk usage. For production kiosks, package it as a desktop app (Electron + embedded browser) or run it headless on a small local server, surfaced via a kiosk browser.
-- `cloud_native_app` can be deployed to any Python-friendly PaaS — use environment variables for Supabase keys and other secrets.
+- `cloud_native_app` can be deployed to any Python-friendly PaaS - use environment variables for Supabase keys and other secrets.
 
 ---
 
@@ -327,7 +327,7 @@ If Supabase credentials aren't configured, `ai_native_app` falls back to a defen
 
 ## Visual Tour
 
-A real look at the platform in action — pulled directly from `Project Snapshots/`.
+A real look at the platform in action - pulled directly from `Project Snapshots/`.
 
 <div align="center">
 
@@ -335,19 +335,19 @@ A real look at the platform in action — pulled directly from `Project Snapshot
 <tr>
 <td align="center" width="50%">
 <img src="Project%20Snapshots/Module%201%20-%20Qr%20generation.png" width="100%"/>
-<br/><b>Module 1 — QR Generation</b><br/>
+<br/><b>Module 1 - QR Generation</b><br/>
 <sub>Registration flow generating a unique QR-linked ID card</sub>
 </td>
 <td align="center" width="50%">
 <img src="Project%20Snapshots/Module%201%20-%20admin%20panel.png" width="100%"/>
-<br/><b>Module 1 — Admin Panel</b><br/>
+<br/><b>Module 1 - Admin Panel</b><br/>
 <sub>Command Center dashboard for managing registered users</sub>
 </td>
 </tr>
 <tr>
 <td align="center" width="50%">
 <img src="Project%20Snapshots/All%20module%20Screenshot1.png" width="100%"/>
-<br/><b>Kiosk — Live Verification</b><br/>
+<br/><b>Kiosk - Live Verification</b><br/>
 <sub>Auto-scan kiosk performing real-time face match</sub>
 </td>
 <td align="center" width="50%">
@@ -373,7 +373,7 @@ A real look at the platform in action — pulled directly from `Project Snapshot
 
 <div align="center">
 
-**Author:** Arshath Farwyz — AI Creative Engineer
+**Author:** Arshath Farwyz - AI Creative Engineer
 **Email:** arshathfarwyz015@gmail.com
 **GitHub:** [github.com/Arshath015](https://github.com/Arshath015)
 
