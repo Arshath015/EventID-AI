@@ -380,3 +380,10 @@ A real look at the platform in action - pulled directly from `Project Snapshots/
 **License:** MIT
 
 </div>
+
+
+## Requirements
+
+```
+pip install -r requirements.txt
+```
