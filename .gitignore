@@ -20,3 +20,9 @@ train_embeddings.npy
 
 # Misc
 .DS_Store
+*.pyc
+*.log
+.ipynb_checkpoints/
+node_modules/
+dist/
+build/
