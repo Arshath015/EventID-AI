@@ -387,3 +387,7 @@ A real look at the platform in action - pulled directly from `Project Snapshots/
 ```
 pip install -r requirements.txt
 ```
+
+
+---
+**Last updated:** 2026-07-16
