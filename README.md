@@ -390,4 +390,4 @@ pip install -r requirements.txt
 
 
 ---
-**Last updated:** 2026-07-16
+**Last updated:** 2026-07-27
